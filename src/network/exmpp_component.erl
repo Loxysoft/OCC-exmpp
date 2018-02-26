@@ -153,8 +153,8 @@ set_controlling_process(Component,Client) when is_pid(Component), is_pid(Client)
 init([Pid]) ->
     inets:start(),
     exmpp_stringprep:start(),
-    {A1,A2,A3} = now(),
-    random:seed(A1, A2, A3),
+    {A1,A2,A3} = erlang:timestamp(),
+    rand:seed(exsplus, {A1, A2, A3}),
     {ok, setup, #state{client_pid=Pid}}.
 
 handle_event(tcp_closed, _StateName, State) ->

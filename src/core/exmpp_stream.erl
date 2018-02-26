@@ -728,7 +728,7 @@ error(Condition, {Lang, Text}) ->
 %% @doc Tell if this element is a stream error.
 
 -spec is_error
-(xmlel()) -> bool().
+(xmlel()) -> boolean().
 
 is_error(#xmlel{ns = ?NS_XMPP, name = 'error'}) ->
     true;
