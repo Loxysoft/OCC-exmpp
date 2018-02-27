@@ -43,7 +43,6 @@
         exmpp_server_privacy,
         exmpp_server_sasl,
         exmpp_server_session,
-        exmpp_socket,
         exmpp_server_tls,
         exmpp_sasl_digest,
         exmpp_session,
