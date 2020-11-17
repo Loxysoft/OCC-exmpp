@@ -4,6 +4,10 @@
 NODEBUG = 1
 !ENDIF
 
+DISABLE_XML_LIBXML2 = 1
+DISABLE_TLS_OPENSSL = 1
+DISABLE_COMPRESS_ZLIB = 1
+
 !include <Win32.Mak>
 
 # Erlang environments.
