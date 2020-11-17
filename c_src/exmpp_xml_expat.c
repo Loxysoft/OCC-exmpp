@@ -321,6 +321,7 @@ static void
 expat_cb_start_namespace(void *user_data,
     const char *prefix, const char *uri)
 {
+	struct exmpp_xml_data *edd;
     /* if namespace=='', it is not declaring a namespace but clearing it.
        It is not valid to have a declaration like xmlns:nothing='' 
       (it is invalid xml: "XML Parsing Error: must not undeclare prefix"). 
@@ -334,7 +335,6 @@ expat_cb_start_namespace(void *user_data,
     if (uri == NULL) 
         return;
 
-	struct exmpp_xml_data *edd;
 
 	edd = (struct exmpp_xml_data *)user_data;
 
