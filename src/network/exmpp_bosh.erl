@@ -46,7 +46,7 @@
 
 -record(state, {
         parsed_bosh_url, 
-           % {Host::string(), Port:integer(), Path::string(), Ssl::bool()}
+           % {Host::string(), Port:integer(), Path::string(), Ssl::boolean()}
         domain="",                                                   
         sid = <<>>,                                                  
         rid = 0,                                                     
@@ -416,9 +416,8 @@ read_length(Hdrs, Socket, Length) ->
 %%   Host = string()                     
 %%   Port = integer()                    
 %%   Path = string()                     
-%%   Ssl = bool()                        
+%%   Ssl = boolean()                        
 %% @doc                                  
--spec parse_url(string()) -> {string(), integer(), string(), boolean()}.
 parse_url(URL) ->                                                       
     % XXX This should be possible to do with the re module?             
     {Scheme, HostPortPath} = split_scheme(URL),                         
@@ -475,7 +474,6 @@ format_request(Path, Method, Hdrs, Host, Body) ->
 %% Turns the method in to a string suitable for inclusion in a HTTP request
 %% line.
 %% end
-%-spec normalize_method(atom() | string()) -> string().                    
 %normalize_method(Method) when is_atom(Method) ->                          
 %    string:to_upper(atom_to_list(Method));                                
 %normalize_method(Method) ->                                               

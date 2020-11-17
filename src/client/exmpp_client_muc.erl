@@ -32,18 +32,12 @@
          update_banlist/3
          ]).
 
--type(ban_item() :: {exmpp_jid:jid(), outcast | none | binary()} | {exmpp_jid:jid(), outcast | none | binary(), binary() | string()}).
-
-
--spec kick(Room :: exmpp_jid:jid(), Nick :: string() | binary()) -> #xmlel{}.
 kick(Room, Nick) ->
    kick(?NS_JABBER_CLIENT, Room, Nick).
 
--spec kick(NS :: atom() | string(), Room :: exmpp_jid:jid(), Nick :: string() | binary()) -> #xmlel{}.
 kick(NS, Room, Nick) ->
     kick(NS, Room, Nick, <<>>).
 
--spec kick(NS :: atom() | string(), Room :: exmpp_jid:jid(), Nick :: string() | binary(), Reason :: string() | binary()) -> #xmlel{}.
 kick(NS, Room, Nick, Reason) ->
     exmpp_stanza:set_recipient(
         exmpp_iq:set(NS, 
@@ -52,24 +46,19 @@ kick(NS, Room, Nick, Reason) ->
                     [exmpp_xml:element(?NS_MUC_ADMIN, 'reason', [], [?XMLCDATA(Reason)])])])), Room).
 
 
--spec ban(Room :: exmpp_jid:jid(), JID :: exmpp_jid:jid() ) -> #xmlel{}.
 ban(Room, JID) ->
    ban(?NS_JABBER_CLIENT, Room, JID).
 
--spec ban(NS :: atom() | string(), Room :: exmpp_jid:jid(), JID :: exmpp_jid:jid()) -> #xmlel{}.
 ban(NS, Room, JID) ->
     ban(NS, Room, JID, <<>>).
 
--spec ban(NS :: atom() | string(), Room :: exmpp_jid:jid(), JID :: exmpp_jid:jid(), Reason :: string() | binary()) -> #xmlel{}.
 ban(NS, Room, JID, Reason) ->
     update_banlist(NS, Room, [{JID, outcast, Reason}]).
 
 
--spec get_banlist(Room :: exmpp_jid:jid()) -> #xmlel{}.
 get_banlist(Room) ->
     get_banlist(?NS_JABBER_CLIENT, Room).
 
--spec get_banlist(NS :: atom() | string(), Room :: exmpp_jid:jid()) -> #xmlel{}.
 get_banlist(NS, Room) ->
     exmpp_stanza:set_recipient(
         exmpp_iq:get(NS, 
@@ -77,11 +66,9 @@ get_banlist(NS, Room) ->
                 [exmpp_xml:element(?NS_MUC_ADMIN, 'item', [?XMLATTR(<<"affiliation">>, <<"outcast">>)], [])])), Room ).
     
 
--spec update_banlist(Room :: exmpp_jid:jid(), BanList :: [ban_item()]) -> #xmlel{}.
 update_banlist(Room, BanList) ->
     update_banlist(?NS_JABBER_CLIENT, Room, BanList).
 
--spec update_banlist(NS :: atom() | string(), Room :: exmpp_jid:jid(), BanList :: [ban_item()]) -> #xmlel{}.
 update_banlist(NS, Room, BanList) ->
      exmpp_stanza:set_recipient(
         exmpp_iq:set(NS, 

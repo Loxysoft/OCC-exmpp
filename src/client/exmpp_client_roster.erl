@@ -81,7 +81,7 @@ set_item(Id, ContactJID, Groups, Nick) ->
 %%     Roster_ID = string()
 %% @doc Generate a random roster iq ID.
 %%
-%% This function uses {@link random:uniform/1}. It's up to the caller to
+%% This function uses {@link rand:uniform/1}. It's up to the caller to
 %% seed the generator.
 
 roster_id() ->

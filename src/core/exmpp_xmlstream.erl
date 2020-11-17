@@ -64,14 +64,6 @@
 	  opened = false       :: boolean(),
 	  wrapper_tagnames = undefined :: undefined | [atom() | string()]
 	 }).
--type(xmlstream() :: #xml_stream{}).
-
--type(xmlstreamevent() ::
-      {xmlstreamstart, atom() | string(), [#xmlattr{} | xmlattr_old()]} |
-      #xmlstreamstart{} |
-      #xmlstreamelement{} |
-      #xmlstreamend{}
-     ).
 
 %% --------------------------------------------------------------------
 %% Stream parsing, chunk by chunk.
@@ -91,9 +83,6 @@
 %% @see exmpp_xml:start_parser/1.
 %% @see exmpp_xml:reset_parser/2.
 
--spec start
-      (callback(), exmpp_xml:xmlparser()) -> xmlstream().
-
 start(Callback, Parser) ->
     start(Callback, Parser, []).
 
@@ -112,10 +101,6 @@ start(Callback, Parser) ->
 %%
 %% @see exmpp_xml:start_parser/1.
 %% @see exmpp_xml:reset_parser/2.
-
--spec start
-      (callback(), exmpp_xml:xmlparser(), [{xmlstreamstart, new | old}]) ->
-	     xmlstream().
 
 start(Callback, Parser, Stream_Options) ->
     Callback2 = case Callback of
@@ -140,8 +125,6 @@ start(Callback, Parser, Stream_Options) ->
 %%     New_Stream = xmlstream()
 %% @doc Reset stream and the underlying XML parser.
 
--spec reset(xmlstream()) -> xmlstream().
-
 reset(#xml_stream{parser = Parser} = Stream) ->
     New_Parser = exmpp_xml:reset_parser(Parser),
     Stream#xml_stream{parser = New_Parser, opened = false}.
@@ -150,8 +133,6 @@ reset(#xml_stream{parser = Parser} = Stream) ->
 %%     Stream = xmlstream()
 %%     Parser = exmpp_xml:xmlparser()
 %% @doc Return the XML parser used.
-
--spec get_parser(xmlstream()) -> exmpp_xml:xmlparser().
 
 get_parser(#xml_stream{parser = Parser}) ->
     Parser.
@@ -169,8 +150,6 @@ get_parser(#xml_stream{parser = Parser}) ->
 %%
 %% @see get_parser/1.
 
--spec stop(xmlstream()) -> ok.
-
 stop(_Stream) ->
     ok.
 
@@ -186,11 +165,6 @@ stop(_Stream) ->
 %% function may not send any event.
 %%
 %% Potential events are described by the {@link xmlstreamevent()} type.
-
--spec parse
-      (xmlstream(), binary() | string()) ->
-	     {ok, xmlstream()} | {ok, xmlstream(), [xmlstreamevent()]} |
-		 {error, any()}.
 
 parse(#xml_stream{parser = Parser} = Stream, Data) ->
     try exmpp_xml:parse(Parser, Data) of
@@ -324,8 +298,6 @@ send_events(Stream, []) ->
 %%     NewStream = xmlstream()
 %% @doc Change callback of the stream.
 
--spec change_callback(xmlstream(), callback()) -> xmlstream().
-
 change_callback(Stream, CallBack) ->
     NewCallBack = if is_pid(CallBack) ->
 			  {process, CallBack};
@@ -348,10 +320,6 @@ change_callback(Stream, CallBack) ->
 %% @see exmpp_xml:start_parser/0.
 %% @see exmpp_xml:parse_document/1.
 
--spec parse_element
-      (binary() | string()) ->
-	     [xmlnode() | xmlendtag()].
-
 parse_element(Data) ->
     parse_element(Data, []).
 
@@ -365,10 +333,6 @@ parse_element(Data) ->
 %%
 %% @see exmpp_xml:start_parser/1.
 %% @see exmpp_xml:parse_document/2.
-
--spec parse_element
-      (binary() | string(), [exmpp_xml:xmlparseroption()]) ->
-	     [xmlnode() | xmlendtag()].
 
 parse_element(Data, Parser_Options) ->
     case exmpp_xml:parse_document(Data, Parser_Options) of
@@ -386,8 +350,6 @@ parse_element(Data, Parser_Options) ->
 %%     New_Stream = xmlstream()
 %% @doc Reset stream and the underlying XML parser.
 %% TODO: Support wrapper tag match on both namespace and name ?
-
--spec set_wrapper_tagnames(xmlstream(), [atom()|string()]) -> xmlstream().
 
 set_wrapper_tagnames(Stream, TagNames) when is_list(TagNames) ->
     Stream#xml_stream{wrapper_tagnames = TagNames}.
