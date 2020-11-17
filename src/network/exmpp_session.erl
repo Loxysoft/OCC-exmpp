@@ -407,16 +407,14 @@ init([Pid]) ->
     inets:start(),
     exmpp_stringprep:start(),
 
-    {A1,A2,A3} = erlang:timestamp(),
-    rand:seed(exsplus, {A1, A2, A3}),
+    rand:seed(exrop, erlang:timestamp()),
     {ok, setup, #state{client_pid=Pid, stream_version = {0,0}}}; %%if not specified, do not use version 1.0
 init([Pid, Version]) ->
     inets:start(),
     exmpp_stringprep:start(),
     exmpp_compress:start(),
 
-    {A1,A2,A3} = erlang:timestamp(),
-    rand:seed(exsplus, {A1, A2, A3}),
+    rand:seed(exrop, erlang:timestamp()),
     {ok, setup, #state{client_pid=Pid, stream_version = Version}}.
 
 handle_event(tcp_closed, _StateName, State) ->
