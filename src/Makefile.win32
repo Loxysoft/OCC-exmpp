@@ -1,6 +1,6 @@
 # Erlang environments.
 !IFNDEF ERLANG_ROOT_DIR
-ERLANG_ROOT_DIR = C:\Program Files\erl5.6.2
+ERLANG_ROOT_DIR = C:\Program Files (x86)\erl10.2
 !ENDIF
 !IFNDEF ERL
 ERL = "$(ERLANG_ROOT_DIR)\bin\erl.exe"
@@ -43,7 +43,7 @@ clean:
 	-del Emakefile $(BUILT_SOURCES)
 
 Emakefile: Emakefile.in Emakefile.js
-	cscript /nologo Emakefile.js Emakefile.in $(EMKOPTS) > $@
+	cscript /nologo Emakefile.js Emakefile.in "report_warnings, {warn_format, 1}, warn_export_vars, warn_shadow_vars, warn_unused_import, {d, 'HAVE_EXPAT'}" > $@
 
 {..\include\internal}.in.erl:
 	cscript /nologo core\$*.erl.js ..\include\internal\$*.in > $*.erl

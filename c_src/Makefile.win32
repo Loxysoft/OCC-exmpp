@@ -12,17 +12,17 @@ DISABLE_COMPRESS_ZLIB = 1
 
 # Erlang environments.
 !IFNDEF ERLANG_ROOT_DIR
-ERLANG_ROOT_DIR = C:\Program Files\erl5.6.2
+ERLANG_ROOT_DIR = C:\Program Files (x86)\erl10.2
 !ENDIF
 !IFNDEF ERLANG_LIB_DIR_erl_interface
-ERLANG_LIB_DIR_erl_interface = $(ERLANG_ROOT_DIR)\lib\erl_interface-3.5.6
+ERLANG_LIB_DIR_erl_interface = $(ERLANG_ROOT_DIR)\lib\erl_interface-3.10.4
 !ENDIF
 
 EI_CPPFLAGS = -D__WIN32__ -I"$(ERLANG_ROOT_DIR)\usr\include" -I"$(ERLANG_LIB_DIR_erl_interface)\include"
 EI_LIBS = "$(ERLANG_LIB_DIR_erl_interface)\lib\ei_md.lib"
 
 !IFNDEF EXPAT_PREFIX
-EXPAT_PREFIX = C:\Program Files\Expat 2.0.1
+EXPAT_PREFIX = C:\Program Files (x86)\Expat 2.0.1
 !ENDIF
 EXPAT_CPPFLAGS = -I"$(EXPAT_PREFIX)\Source\lib"
 EXPAT_LIBS = "$(EXPAT_PREFIX)\Bin\libexpat.lib"
